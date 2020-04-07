@@ -1,8 +1,8 @@
 # Snell Server
 
-对 snell 协议版本 2.0b7 的初步逆向，1.1 版本详见 [v1](README.v1.md)
+对 snell 协议版本 v2.0b 的初步逆向，1.1 版本详见 [v1](README.v1.md)
 
-**注意，目前（2020年3月23日） snell 2.0 仍然在快速迭代中且本人较忙，因此本项目将暂缓逆向进程，等官方发布 v2.0 release 版本后再找时间逆向。谢谢大家。**
+~~注意，目前（2020年3月23日） snell 2.0 仍然在快速迭代中且本人较忙，因此本项目将暂缓逆向进程，等官方发布 v2.0 release 版本后再找时间逆向。谢谢大家。~~（已更新）
 
 # Overview
 
@@ -41,14 +41,16 @@ version:    0x01       /* why not 0x02 ? */
 
 command:
     0x00:   PING
-    0x01:   CONNECT    /* not used */
-    0x05:   CONNECT2
+    0x01:   CONNECT    /* for snell v1 */
+    0x05:   CONNECTv2
 
 client_id length: length of client_id
-client_id: currently a 36 characters uuid string in official implementation, which I think could be an arbitrary string (correct me)
+client_id: arbitrary string including empty string
 ```
 
-* 本 repo 尚未给出 v2.0b 版本的 demo
+* CONNECT 指令则表示这是一个 snell v1 的连接，详见 [v1](README.v1.md)
+
+* ~~本 repo 尚未给出 v2.0b 版本的 demo~~ [open-snell](https://github.com/icpz/open-snell)
 
 * host 总是字符串格式的，即使是 ip 地址
 
@@ -92,7 +94,7 @@ command:
 ```
 
 C->S : [request-header 0][app data]          [app data][]               [request-header 1][app data]          [app data][] ...
-S->C :                   [0x00]    [app data]          [0x00][app data...][]                              [0x00][app data][]           ...
+S->C :                   [0x00]    [app data]          [app data...][]                              [0x00][app data][]           ...
 
 ```
 
